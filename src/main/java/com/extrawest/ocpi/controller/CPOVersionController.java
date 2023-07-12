@@ -3,7 +3,7 @@ package com.extrawest.ocpi.controller;
 import com.extrawest.ocpi.model.dto.response.VersionDetailsResponseDTO;
 import com.extrawest.ocpi.model.dto.response.VersionResponseDTO;
 import com.extrawest.ocpi.model.enums.VersionNumber;
-import com.extrawest.ocpi.service.EMSPVersionService;
+import com.extrawest.ocpi.service.CPOVersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,26 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/emsp/api/2.2.1/versions")
-public class EMSPVersionController {
+@RequestMapping("/cpo/api/2.2.1/versions")
+public class CPOVersionController {
 
-    protected final EMSPVersionService emspVersionService;
+    protected final CPOVersionService cpoVersionService;
 
-    public EMSPVersionController(@Autowired EMSPVersionService emspVersionService) {
-        this.emspVersionService = emspVersionService;
+    protected CPOVersionController(@Autowired CPOVersionService cpoVersionService) {
+        this.cpoVersionService = cpoVersionService;
     }
 
     /**
      * Fetch information about the supported versions.
      * @return list of VersionResponseDTO
      */
+    @GetMapping
     public ResponseEntity<List<VersionResponseDTO>> getVersion() {
-        return ResponseEntity.ok(emspVersionService.getVersion());
+        return ResponseEntity.ok(cpoVersionService.getVersion());
     };
 
     /**
      * Via the version details, the parties can exchange which modules are implemented for a specific version of OCPI,
-     * which interface role is implemented, and what the endpoint URL is for this interface.
+     * which interfacevrole is implemented, and what the endpoint URL is for this interface.
      * @param version - version of OCPI
      * @return VersionDetails
      */
@@ -41,6 +42,6 @@ public class EMSPVersionController {
     public ResponseEntity<VersionDetailsResponseDTO> getVersionDetails(
             @PathVariable(value = "version") VersionNumber version
     ) {
-        return ResponseEntity.ok(emspVersionService.getVersionDetails(version));
+        return ResponseEntity.ok(cpoVersionService.getVersionDetails(version));
     };
 }

@@ -1,20 +1,21 @@
 package com.extrawest.ocpi.controller;
 
 import com.extrawest.ocpi.model.dto.CredentialsDTO;
-import com.extrawest.ocpi.service.EMSPCredentialsService;
-import jakarta.validation.Valid;
+import com.extrawest.ocpi.service.CPOCredentialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("/emsp/api/2.2.1/credentials")
-public class EMSPCredentialsController {
+@RequestMapping("/cpo/api/2.2.1/credentials")
+public class CPOCredentialsController {
 
-    protected final EMSPCredentialsService emspCredentialsService;
+    protected final CPOCredentialsService cpoCredentialsService;
 
-    protected EMSPCredentialsController(@Autowired EMSPCredentialsService emspCredentialsService) {
-        this.emspCredentialsService = emspCredentialsService;
+    protected CPOCredentialsController(@Autowired CPOCredentialsService cpoCredentialsService) {
+        this.cpoCredentialsService = cpoCredentialsService;
     }
 
     /**
@@ -23,7 +24,7 @@ public class EMSPCredentialsController {
      */
     @GetMapping
     public ResponseEntity<CredentialsDTO> getCredentials() {
-        return ResponseEntity.ok(emspCredentialsService.getCredentials());
+        return ResponseEntity.ok(cpoCredentialsService.getCredentials());
     };
 
     /**
@@ -31,10 +32,8 @@ public class EMSPCredentialsController {
      * @param credentialsDTO - credentials
      */
     @PostMapping
-    public void postCredentials(
-            @RequestBody @Valid CredentialsDTO credentialsDTO
-    ) {
-        emspCredentialsService.postCredentials(credentialsDTO);
+    public void postCredentials(@RequestBody @Valid CredentialsDTO credentialsDTO) {
+        cpoCredentialsService.postCredentials(credentialsDTO);
     };
 
     /**
@@ -42,10 +41,8 @@ public class EMSPCredentialsController {
      * @param credentialsDTO - credentials
      */
     @PutMapping
-    public void putCredentials(
-            @RequestBody @Valid CredentialsDTO credentialsDTO
-    ) {
-        emspCredentialsService.putCredentials(credentialsDTO);
+    public void putCredentials(@RequestBody @Valid CredentialsDTO credentialsDTO) {
+        cpoCredentialsService.putCredentials(credentialsDTO);
     };
 
     /**
@@ -53,9 +50,7 @@ public class EMSPCredentialsController {
      * @param credentialsDTO - credentials
      */
     @DeleteMapping
-    public void deleteCredentials(
-            @RequestBody @Valid CredentialsDTO credentialsDTO
-    ) {
-        emspCredentialsService.deleteCredentials(credentialsDTO);
+    public void deleteCredentials(@RequestBody @Valid CredentialsDTO credentialsDTO) {
+        cpoCredentialsService.deleteCredentials(credentialsDTO);
     };
 }

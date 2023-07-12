@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/hub/api/2.2.1/hubClientInfo")
-public abstract class HubClientInfoController {
+public class HubClientInfoController {
 
     protected final HubClientInfoService hubClientInfoService;
 
