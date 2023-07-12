@@ -6,7 +6,7 @@ import com.extrawest.ocpi.model.enums.VersionNumber;
 
 import java.util.List;
 
-public interface EMSPVersionService {
+public interface CPOVersionService {
 
     List<VersionResponseDTO> getVersion();
     VersionDetailsResponseDTO getVersionDetails(VersionNumber version);
