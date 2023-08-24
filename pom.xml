@@ -5,7 +5,7 @@
 
     <groupId>com.extrawest</groupId>
     <artifactId>Extrawest-OCPI-2.2.1-CPO-Server</artifactId>
-    <version>2023.7.12</version>
+    <version>2023.8.24</version>
 
     <name>Extrawest-OCPI-2.2.1-CPO-Server</name>
     <description>Extrawest-OCPI-2.2.1-CPO-Server</description>
@@ -160,7 +160,7 @@
                 <configuration>
                     <jreleaser>
                         <project>
-                            <description>OCPP operation tester for the Charge Points</description>
+                            <description>OCPI library for CPO operations</description>
                             <website>https://github.com/extrawest/Extrawest-OCPI-2.2.1-CPO-Server/tree/main</website>
                             <docsUrl>https://github.com/extrawest/Extrawest-OCPI-2.2.1-CPO-Server/tree/main</docsUrl>
                             <license>APACHE-2.0</license>
