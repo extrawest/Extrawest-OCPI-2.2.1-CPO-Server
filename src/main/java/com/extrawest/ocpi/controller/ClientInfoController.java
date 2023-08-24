@@ -18,7 +18,7 @@ public class ClientInfoController {
     }
 
     /**
-     * Retrieve a ClientInfo object as it is stored in the connected clients system.
+     * Retrieve a ClientInfo object as it is stored in the connected client's system.
      * @param countryCode Country code of the requested ClientInfo object.
      * @param partyId Party ID (Provider ID) of the requested ClientInfo object.
      * @return The requested ClientInfo object.
