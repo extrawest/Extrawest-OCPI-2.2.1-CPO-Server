@@ -28,5 +28,5 @@ jobs:
           TOKEN: ${{ env.GITHUB_TOKEN }}
         run: |
           mvn deploy -DskipTests=true -Dmaven.javadoc.skip=true \
-            -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/extrawest/Extrawest-OCPI-2.2.1-CPO-Server \
+            -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/extrawest/extrawest-ocpi-2.2.1-cpo-server \
             -Dusername=${USERNAME} -Dpassword=${TOKEN}
