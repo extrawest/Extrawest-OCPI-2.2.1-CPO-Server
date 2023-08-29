@@ -2,6 +2,7 @@ package com.extrawest.ocpi.controller;
 
 import com.extrawest.ocpi.model.dto.ClientInfoDTO;
 import com.extrawest.ocpi.service.ClientInfoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/2.2.1/hubClientInfo")
+@Tag(name = "ClientInfo")
 public class ClientInfoController {
 
     protected final ClientInfoService clientInfoService;

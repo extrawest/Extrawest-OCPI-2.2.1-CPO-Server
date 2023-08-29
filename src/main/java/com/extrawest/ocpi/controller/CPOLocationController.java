@@ -3,6 +3,7 @@ package com.extrawest.ocpi.controller;
 import com.extrawest.ocpi.model.AbstractDomainObject;
 import com.extrawest.ocpi.model.dto.LocationDTO;
 import com.extrawest.ocpi.service.CPOLocationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cpo/api/2.2.1/locations")
+@Tag(name = "CPOLocation")
 public class CPOLocationController {
 
     protected final CPOLocationService cpoLocationService;

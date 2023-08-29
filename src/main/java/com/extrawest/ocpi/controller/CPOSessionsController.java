@@ -3,6 +3,7 @@ package com.extrawest.ocpi.controller;
 import com.extrawest.ocpi.model.dto.ChargingPreferencesDTO;
 import com.extrawest.ocpi.model.dto.SessionDTO;
 import com.extrawest.ocpi.service.CPOSessionsService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cpo/api/2.2.1/sessions")
+@Tag(name = "CPOSessions")
 public class CPOSessionsController {
 
     protected final CPOSessionsService cpoSessionsService;

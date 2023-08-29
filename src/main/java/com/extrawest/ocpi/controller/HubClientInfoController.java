@@ -2,6 +2,7 @@ package com.extrawest.ocpi.controller;
 
 import com.extrawest.ocpi.model.dto.ClientInfoDTO;
 import com.extrawest.ocpi.service.HubClientInfoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/hub/api/2.2.1/hubClientInfo")
+@Tag(name = "HubClientInfo")
 public class HubClientInfoController {
 
     protected final HubClientInfoService hubClientInfoService;

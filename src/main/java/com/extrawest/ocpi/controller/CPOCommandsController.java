@@ -4,6 +4,7 @@ import com.extrawest.ocpi.model.AbstractCommand;
 import com.extrawest.ocpi.model.dto.response.CommandResponseDTO;
 import com.extrawest.ocpi.model.enums.CommandType;
 import com.extrawest.ocpi.service.CPOCommandsService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cpo/api/2.2.1/commands")
+@Tag(name = "CPOCommands")
 public class CPOCommandsController {
 
     protected final CPOCommandsService cpoCommandsService;
