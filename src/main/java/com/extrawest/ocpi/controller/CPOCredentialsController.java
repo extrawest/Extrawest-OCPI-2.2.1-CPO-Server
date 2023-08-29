@@ -2,6 +2,7 @@ package com.extrawest.ocpi.controller;
 
 import com.extrawest.ocpi.model.dto.CredentialsDTO;
 import com.extrawest.ocpi.service.CPOCredentialsService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/cpo/api/2.2.1/credentials")
+@Tag(name = "CPOCredentials")
 public class CPOCredentialsController {
 
     protected final CPOCredentialsService cpoCredentialsService;

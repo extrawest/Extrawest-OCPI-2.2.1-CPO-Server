@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.extrawest</groupId>
-    <artifactId>extrawest-ocpi-2.2.1-cpo-server</artifactId>
-    <version>2023.8.24-SNAPSHOT</version>
+    <artifactId>Extrawest-OCPI-2.2.1-CPO-Server</artifactId>
+    <version>2023.8.27-SNAPSHOT</version>
 
     <name>Extrawest-OCPI-2.2.1-CPO-Server</name>
     <description>Extrawest-OCPI-2.2.1-CPO-Server</description>

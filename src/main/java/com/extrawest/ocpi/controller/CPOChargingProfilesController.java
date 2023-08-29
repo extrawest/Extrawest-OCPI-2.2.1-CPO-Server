@@ -3,6 +3,7 @@ package com.extrawest.ocpi.controller;
 import com.extrawest.ocpi.model.dto.request.SetChargingProfileRequestDTO;
 import com.extrawest.ocpi.model.dto.response.ChargingProfileResponseDTO;
 import com.extrawest.ocpi.service.CPOChargingProfilesService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/cpo/api/2.2.1/chargingProfiles")
+@Tag(name = "CPOChargingProfiles")
 public class CPOChargingProfilesController {
 
     protected final CPOChargingProfilesService cpoChargingProfilesService;
