@@ -2,12 +2,10 @@ name: Publish package to the Maven Central Repository and create GitHub Release
 
 on:
   push:
-    branches:
-      - dev
-#    tags:
-#      - v*
-#  pull_request:
-#    branches: [ main ]
+    tags:
+      - v*
+  pull_request:
+    branches: [ main ]
 
 jobs:
   publish:

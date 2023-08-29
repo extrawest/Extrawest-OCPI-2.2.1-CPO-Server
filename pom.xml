@@ -5,7 +5,7 @@
 
     <groupId>com.extrawest</groupId>
     <artifactId>Extrawest-OCPI-2.2.1-CPO-Server</artifactId>
-    <version>2023.8.24</version>
+    <version>2023.8.24-SNAPSHOT</version>
 
     <name>Extrawest-OCPI-2.2.1-CPO-Server</name>
     <description>Extrawest-OCPI-2.2.1-CPO-Server</description>
@@ -225,7 +225,7 @@
 
         <!-- GitHub Releases -->
         <snapshotRepository>
-            <id>github-releases</id>
+            <id>github</id>
             <url>https://maven.pkg.github.com/extrawest/Extrawest-OCPI-2.2.1-CPO-Server</url>
             <name>GitHub Package Registry</name>
             <uniqueVersion>false</uniqueVersion>
