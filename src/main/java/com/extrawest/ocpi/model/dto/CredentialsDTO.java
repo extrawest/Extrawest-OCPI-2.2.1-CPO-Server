@@ -2,6 +2,7 @@ package com.extrawest.ocpi.model.dto;
 
 import com.extrawest.ocpi.model.vo.CredentialsRole;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,6 @@ public class CredentialsDTO {
     @NotBlank
     @Size(max = 255)
     private String url;
-    @NotBlank
+    @NotEmpty
     private List<CredentialsRole> roles;
 }

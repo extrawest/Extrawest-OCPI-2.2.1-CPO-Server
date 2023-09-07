@@ -7,9 +7,7 @@ import com.extrawest.ocpi.model.vo.Price;
 import com.extrawest.ocpi.model.vo.TariffElement;
 import com.extrawest.ocpi.util.Constants;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,7 +45,7 @@ public class TariffDTO {
     private Price minPrice;
     @JsonProperty("max_price")
     private Price maxPrice;
-    @NotBlank
+    @NotEmpty
     private List<TariffElement> elements;
     @JsonProperty("start_date_time")
     private LocalDateTime startDateTime;
@@ -55,7 +53,7 @@ public class TariffDTO {
     private LocalDateTime endDateTime;
     @JsonProperty("energy_mix")
     private EnergyMix energyMix;
-    @NotBlank
+    @NotNull
     @JsonProperty("last_updated")
     private LocalDateTime lastUpdated;
 }

@@ -27,7 +27,7 @@ public class CPOCredentialsController {
     @GetMapping
     public ResponseEntity<CredentialsDTO> getCredentials() {
         return ResponseEntity.ok(cpoCredentialsService.getCredentials());
-    };
+    }
 
     /**
      * Provides the server with a credentials object to access the client’s system (i.e. register).
@@ -36,7 +36,7 @@ public class CPOCredentialsController {
     @PostMapping
     public void postCredentials(@RequestBody @Valid CredentialsDTO credentialsDTO) {
         cpoCredentialsService.postCredentials(credentialsDTO);
-    };
+    }
 
     /**
      * Provides the server with an updated credentials object to access the client’s system.
@@ -45,7 +45,7 @@ public class CPOCredentialsController {
     @PutMapping
     public void putCredentials(@RequestBody @Valid CredentialsDTO credentialsDTO) {
         cpoCredentialsService.putCredentials(credentialsDTO);
-    };
+    }
 
     /**
      * Informs the server that its credentials to the client’s system are now invalid (i.e. unregister).
@@ -54,5 +54,5 @@ public class CPOCredentialsController {
     @DeleteMapping
     public void deleteCredentials(@RequestBody @Valid CredentialsDTO credentialsDTO) {
         cpoCredentialsService.deleteCredentials(credentialsDTO);
-    };
+    }
 }

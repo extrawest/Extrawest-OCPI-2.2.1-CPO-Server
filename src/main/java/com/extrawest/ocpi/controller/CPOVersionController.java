@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cpo/api/2.2.1/versions")
+@RequestMapping("/cpo/api/versions")
 @Tag(name = "CPOVersion")
 public class CPOVersionController {
 
@@ -32,7 +32,7 @@ public class CPOVersionController {
     @GetMapping
     public ResponseEntity<List<VersionResponseDTO>> getVersion() {
         return ResponseEntity.ok(cpoVersionService.getVersion());
-    };
+    }
 
     /**
      * Via the version details, the parties can exchange which modules are implemented for a specific version of OCPI,
@@ -45,5 +45,5 @@ public class CPOVersionController {
             @PathVariable(value = "version") VersionNumber version
     ) {
         return ResponseEntity.ok(cpoVersionService.getVersionDetails(version));
-    };
+    }
 }
