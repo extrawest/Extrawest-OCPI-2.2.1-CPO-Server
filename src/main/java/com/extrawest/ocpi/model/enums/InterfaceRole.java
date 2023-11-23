@@ -22,6 +22,15 @@ public enum InterfaceRole {
         this.value = value;
     }
 
+    @JsonCreator
+    public static InterfaceRole fromValue(String value) {
+        return findByField(
+                InterfaceRole.class,
+                InterfaceRole::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -30,14 +39,5 @@ public enum InterfaceRole {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static InterfaceRole fromValue(String value) {
-        return findByField(
-                InterfaceRole.class,
-                InterfaceRole::value,
-                value
-        );
     }
 }

@@ -7,17 +7,26 @@ import static com.extrawest.ocpi.util.EnumUtil.findByField;
 
 public enum EnvironmentalImpactCategory {
     /**
-     * Produced nuclear waste in grams per kilowatthour.
+     * Produced nuclear waste in grams per kilowatt/hour.
      */
     NUCLEAR_WASTE("NUCLEAR_WASTE"),
     /**
-     * Exhausted carbon dioxide in grams per kilowatthour.
+     * Exhausted carbon dioxide in grams per kilowatt/hour.
      */
     CARBON_DIOXIDE("CARBON_DIOXIDE");
     private final String value;
 
     EnvironmentalImpactCategory(String value) {
         this.value = value;
+    }
+
+    @JsonCreator
+    public static EnvironmentalImpactCategory fromValue(String value) {
+        return findByField(
+                EnvironmentalImpactCategory.class,
+                EnvironmentalImpactCategory::value,
+                value
+        );
     }
 
     @Override
@@ -28,14 +37,5 @@ public enum EnvironmentalImpactCategory {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static EnvironmentalImpactCategory fromValue(String value) {
-        return findByField(
-                EnvironmentalImpactCategory.class,
-                EnvironmentalImpactCategory::value,
-                value
-        );
     }
 }

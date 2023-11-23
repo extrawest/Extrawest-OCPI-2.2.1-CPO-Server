@@ -35,6 +35,15 @@ public enum ChargingPreferencesResponse {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ChargingPreferencesResponse fromValue(String value) {
+        return EnumUtil.findByField(
+                ChargingPreferencesResponse.class,
+                ChargingPreferencesResponse::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -43,14 +52,5 @@ public enum ChargingPreferencesResponse {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ChargingPreferencesResponse fromValue(String value) {
-        return EnumUtil.findByField(
-                ChargingPreferencesResponse.class,
-                ChargingPreferencesResponse::value,
-                value
-        );
     }
 }

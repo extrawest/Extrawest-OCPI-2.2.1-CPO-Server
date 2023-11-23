@@ -1,10 +1,11 @@
 package com.extrawest.ocpi.model.enums;
 
+import com.extrawest.ocpi.model.markers.OcpiResponseData;
 import com.extrawest.ocpi.util.EnumUtil;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Capability {
+public enum Capability implements OcpiResponseData {
     /**
      * The EVSE supports charging profiles.
      */
@@ -66,6 +67,15 @@ public enum Capability {
         this.value = value;
     }
 
+    @JsonCreator
+    public static Capability fromValue(String value) {
+        return EnumUtil.findByField(
+                Capability.class,
+                Capability::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -74,14 +84,5 @@ public enum Capability {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static Capability fromValue(String value) {
-        return EnumUtil.findByField(
-                Capability.class,
-                Capability::value,
-                value
-        );
     }
 }

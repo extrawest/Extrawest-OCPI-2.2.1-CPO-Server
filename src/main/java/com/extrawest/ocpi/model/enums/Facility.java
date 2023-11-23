@@ -91,6 +91,15 @@ public enum Facility {
         this.value = value;
     }
 
+    @JsonCreator
+    public static Facility fromValue(String value) {
+        return EnumUtil.findByField(
+                Facility.class,
+                Facility::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -99,14 +108,5 @@ public enum Facility {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static Facility fromValue(String value) {
-        return EnumUtil.findByField(
-                Facility.class,
-                Facility::value,
-                value
-        );
     }
 }

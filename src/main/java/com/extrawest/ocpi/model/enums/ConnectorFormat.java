@@ -19,6 +19,15 @@ public enum ConnectorFormat {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ConnectorFormat fromValue(String value) {
+        return EnumUtil.findByField(
+                ConnectorFormat.class,
+                ConnectorFormat::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -27,14 +36,5 @@ public enum ConnectorFormat {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ConnectorFormat fromValue(String value) {
-        return EnumUtil.findByField(
-                ConnectorFormat.class,
-                ConnectorFormat::value,
-                value
-        );
     }
 }

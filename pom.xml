@@ -5,7 +5,7 @@
 
     <groupId>com.extrawest</groupId>
     <artifactId>Extrawest-OCPI-2.2.1-CPO-Server</artifactId>
-    <version>2023.9.6</version>
+    <version>2023.11.21</version>
 
     <name>Extrawest-OCPI-2.2.1-CPO-Server</name>
     <description>Extrawest-OCPI-2.2.1-CPO-Server</description>
@@ -21,6 +21,12 @@
         <developer>
             <name>Vladyslav Tertyshnyi</name>
             <email>vladyslav.tertyshnyi@extrawest.com</email>
+            <organization>extrawest</organization>
+            <organizationUrl>https://www.extrawest.com/</organizationUrl>
+        </developer>
+        <developer>
+            <name>Galyna Klymenko</name>
+            <email>galyna.klymenko@extrawest.com</email>
             <organization>extrawest</organization>
             <organizationUrl>https://www.extrawest.com/</organizationUrl>
         </developer>

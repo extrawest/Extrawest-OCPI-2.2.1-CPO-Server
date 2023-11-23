@@ -38,6 +38,15 @@ public enum SessionStatus {
         this.value = value;
     }
 
+    @JsonCreator
+    public static SessionStatus fromValue(String value) {
+        return EnumUtil.findByField(
+                SessionStatus.class,
+                SessionStatus::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -46,14 +55,5 @@ public enum SessionStatus {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static SessionStatus fromValue(String value) {
-        return EnumUtil.findByField(
-                SessionStatus.class,
-                SessionStatus::value,
-                value
-        );
     }
 }

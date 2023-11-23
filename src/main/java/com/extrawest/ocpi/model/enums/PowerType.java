@@ -31,6 +31,15 @@ public enum PowerType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static PowerType fromValue(String value) {
+        return EnumUtil.findByField(
+                PowerType.class,
+                PowerType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -39,14 +48,5 @@ public enum PowerType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static PowerType fromValue(String value) {
-        return EnumUtil.findByField(
-                PowerType.class,
-                PowerType::value,
-                value
-        );
     }
 }

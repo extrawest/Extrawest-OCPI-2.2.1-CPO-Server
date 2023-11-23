@@ -1,5 +1,6 @@
 package com.extrawest.ocpi.model.enums;
 
+import com.extrawest.ocpi.model.markers.OcpiResponseData;
 import com.extrawest.ocpi.util.EnumUtil;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -7,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * This value, if provided, represents the restriction to the parking spot for different purposes.
  */
-public enum ParkingRestriction {
+public enum ParkingRestriction implements OcpiResponseData {
     /**
      * Reserved parking spot for electric vehicles.
      */
@@ -34,6 +35,15 @@ public enum ParkingRestriction {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ParkingRestriction fromValue(String value) {
+        return EnumUtil.findByField(
+                ParkingRestriction.class,
+                ParkingRestriction::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -42,14 +52,5 @@ public enum ParkingRestriction {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ParkingRestriction fromValue(String value) {
-        return EnumUtil.findByField(
-                ParkingRestriction.class,
-                ParkingRestriction::value,
-                value
-        );
     }
 }

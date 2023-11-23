@@ -29,6 +29,15 @@ public enum TariffDimensionType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static TariffDimensionType fromValue(String value) {
+        return findByField(
+                TariffDimensionType.class,
+                TariffDimensionType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -37,14 +46,5 @@ public enum TariffDimensionType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static TariffDimensionType fromValue(String value) {
-        return findByField(
-                TariffDimensionType.class,
-                TariffDimensionType::value,
-                value
-        );
     }
 }

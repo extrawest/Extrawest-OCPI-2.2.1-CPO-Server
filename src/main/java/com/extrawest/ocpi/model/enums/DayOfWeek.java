@@ -19,6 +19,15 @@ public enum DayOfWeek {
         this.value = value;
     }
 
+    @JsonCreator
+    public static DayOfWeek fromValue(String value) {
+        return findByField(
+                DayOfWeek.class,
+                DayOfWeek::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -27,14 +36,5 @@ public enum DayOfWeek {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static DayOfWeek fromValue(String value) {
-        return findByField(
-                DayOfWeek.class,
-                DayOfWeek::value,
-                value
-        );
     }
 }

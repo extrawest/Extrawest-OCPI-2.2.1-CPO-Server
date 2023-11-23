@@ -35,6 +35,15 @@ public enum ParkingType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ParkingType fromValue(String value) {
+        return EnumUtil.findByField(
+                ParkingType.class,
+                ParkingType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -43,14 +52,5 @@ public enum ParkingType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ParkingType fromValue(String value) {
-        return EnumUtil.findByField(
-                ParkingType.class,
-                ParkingType::value,
-                value
-        );
     }
 }

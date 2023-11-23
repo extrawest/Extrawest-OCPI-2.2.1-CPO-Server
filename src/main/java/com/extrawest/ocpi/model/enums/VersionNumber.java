@@ -34,6 +34,15 @@ public enum VersionNumber {
         this.value = value;
     }
 
+    @JsonCreator
+    public static VersionNumber fromValue(String value) {
+        return EnumUtil.findByField(
+                VersionNumber.class,
+                VersionNumber::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -42,14 +51,5 @@ public enum VersionNumber {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static VersionNumber fromValue(String value) {
-        return EnumUtil.findByField(
-                VersionNumber.class,
-                VersionNumber::value,
-                value
-        );
     }
 }
