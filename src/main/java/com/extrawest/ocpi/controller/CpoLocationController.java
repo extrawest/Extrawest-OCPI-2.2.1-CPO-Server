@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/cpo/api/2.2.1/locations")
 @Tag(name = "CPOLocation")
+@Validated
 public class CpoLocationController {
     protected final CpoLocationService cpoLocationService;
     protected final PaginationService paginationService;
@@ -63,17 +65,13 @@ public class CpoLocationController {
     /**
      * Retrieve a Location as it is stored in the eMSP system.
      *
-     * @param countryCode Country code of the CPO requesting data from the eMSP system.
-     * @param partyId     Party ID (Provider ID) of the CPO requesting data from the eMSP system.
      * @param locationId  Location.id of the Location object to retrieve.
      * @return The Location object
      */
-    @GetMapping("/{country_code}/{party_id}/{location_id}")
+    @GetMapping("/{location_id}")
     public ResponseEntity<ResponseFormat<LocationData>> getLocation(
-            @PathVariable(value = "country_code") String countryCode,
-            @PathVariable(value = "party_id") String partyId,
             @PathVariable(value = "location_id") String locationId) {
-        LocationData locationData = cpoLocationService.getLocation(countryCode, partyId, locationId);
+        LocationData locationData = cpoLocationService.getLocation(locationId);
 
         ResponseFormat<LocationData> responseFormat = new ResponseFormat<LocationData>()
                 .build(OcpiStatusCode.SUCCESS, locationData);
@@ -83,19 +81,15 @@ public class CpoLocationController {
     /**
      * Retrieve a Location as it is stored in the eMSP system.
      *
-     * @param countryCode Country code of the CPO requesting data from the eMSP system.
-     * @param partyId     Party ID (Provider ID) of the CPO requesting data from the eMSP system.
      * @param locationId  Location.id of the Location object to retrieve.
      * @param evseUid     EVSE.id of the EVSE object to retrieve.
      * @return The EVSE object
      */
-    @GetMapping("/{country_code}/{party_id}/{location_id}/{evse_uid}")
+    @GetMapping("/{location_id}/{evse_uid}")
     public ResponseEntity<ResponseFormat<LocationData>> getEvse(
-            @PathVariable(value = "country_code") String countryCode,
-            @PathVariable(value = "party_id") String partyId,
             @PathVariable(value = "location_id") String locationId,
             @PathVariable(value = "evse_uid") String evseUid) {
-        LocationData locationData = cpoLocationService.getEvse(countryCode, partyId, locationId, evseUid);
+        LocationData locationData = cpoLocationService.getEvse(locationId, evseUid);
 
         ResponseFormat<LocationData> responseFormat = new ResponseFormat<LocationData>()
                 .build(OcpiStatusCode.SUCCESS, locationData);
@@ -105,21 +99,17 @@ public class CpoLocationController {
     /**
      * Retrieve a Location as it is stored in the eMSP system.
      *
-     * @param countryCode Country code of the CPO requesting data from the eMSP system.
-     * @param partyId     Party ID (Provider ID) of the CPO requesting data from the eMSP system.
      * @param locationId  Location.id of the Location object to retrieve.
      * @param evseUid     EVSE.id of the EVSE object to retrieve.
      * @param connectorId Connector.id of the Connector object to retrieve.
      * @return The Connector object
      */
-    @GetMapping("/{country_code}/{party_id}/{location_id}/{evse_uid}/{connector_id}")
+    @GetMapping("/{location_id}/{evse_uid}/{connector_id}")
     public ResponseEntity<ResponseFormat<LocationData>> getConnector(
-            @PathVariable(value = "country_code") String countryCode,
-            @PathVariable(value = "party_id") String partyId,
             @PathVariable(value = "location_id") String locationId,
             @PathVariable(value = "evse_uid") String evseUid,
             @PathVariable(value = "connector_id") String connectorId) {
-        LocationData locationData = cpoLocationService.getConnector(countryCode, partyId, locationId, evseUid, connectorId);
+        LocationData locationData = cpoLocationService.getConnector(locationId, evseUid, connectorId);
 
         ResponseFormat<LocationData> responseFormat = new ResponseFormat<LocationData>()
                 .build(OcpiStatusCode.SUCCESS, locationData);

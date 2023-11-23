@@ -5,6 +5,7 @@ import com.extrawest.ocpi.model.dto.token.TokenDto;
 import com.extrawest.ocpi.model.enums.TokenType;
 import com.extrawest.ocpi.model.enums.status_codes.OcpiStatusCode;
 import com.extrawest.ocpi.service.CpoTokensService;
+import com.extrawest.ocpi.validation.ClientObjectValidation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,8 @@ public class CpoTokensController {
             @PathVariable(value = "party_id") @Size(min = 3, max = 3) String partyId,
             @PathVariable(value = "token_uid") @Size(min = 1, max = 36) String tokenUid,
             @PathVariable(value = "type", required = false) TokenType type) {
+
+        ClientObjectValidation.checkClientCanModifyObject(tokenDTO, countryCode, partyId, tokenUid);
         TokenDto dto = cpoTokensService.putToken(tokenDTO, countryCode, partyId, tokenUid, type);
 
         ResponseFormat<TokenDto> responseFormat = new ResponseFormat<TokenDto>()
@@ -90,6 +93,8 @@ public class CpoTokensController {
             @PathVariable(value = "party_id") @Size(min = 3, max = 3) String partyId,
             @PathVariable(value = "token_uid") @Size(min = 1, max = 36) String tokenUid,
             @PathVariable(value = "type", required = false) TokenType type) {
+
+        ClientObjectValidation.checkClientCanModifyObject(tokenDTO, countryCode, partyId, tokenUid);
         TokenDto dto = cpoTokensService.patchToken(tokenDTO, countryCode, partyId, tokenUid, type);
 
         ResponseFormat<TokenDto> responseFormat = new ResponseFormat<TokenDto>()

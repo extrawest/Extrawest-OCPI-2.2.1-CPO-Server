@@ -13,11 +13,9 @@ public interface CpoLocationService {
 
     long getTotalCount(LocalDateTime dateFrom, LocalDateTime dateTo);
 
-    Location getLocation(String countryCode, String partyId, String locationId);
+    Location getLocation(String locationId);
 
-    EVSE getEvse(String countryCode, String partyId, String locationId, String evseUid);
+    EVSE getEvse(String locationId, String evseUid);
 
-    Connector getConnector(String countryCode, String partyId, String locationId, String evseUid,
-                           String connectorId);
-
+    Connector getConnector(String locationId, String evseUid, String connectorId);
 }
