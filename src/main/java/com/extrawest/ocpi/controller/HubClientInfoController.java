@@ -41,7 +41,7 @@ public class HubClientInfoController {
      * @param limit    Maximum number of objects to GET.
      * @return List of all (or matching) ClientInfo objects.
      */
-    @GetMapping("/{date_from}/{date_to}/{offset}/{limit}")
+    @GetMapping
     public ResponseEntity<ResponseFormat<List<ClientInfoDto>>> getClientInfoList(
             @RequestParam(value = "date_from", required = false) LocalDateTime dateFrom,
             @RequestParam(value = "date_to", required = false) LocalDateTime dateTo,
