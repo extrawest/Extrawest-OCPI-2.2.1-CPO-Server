@@ -35,6 +35,15 @@ public enum ParkingRestriction implements OcpiResponseData {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ParkingRestriction fromValue(String value) {
+        return EnumUtil.findByField(
+                ParkingRestriction.class,
+                ParkingRestriction::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -43,14 +52,5 @@ public enum ParkingRestriction implements OcpiResponseData {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ParkingRestriction fromValue(String value) {
-        return EnumUtil.findByField(
-                ParkingRestriction.class,
-                ParkingRestriction::value,
-                value
-        );
     }
 }

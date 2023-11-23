@@ -21,6 +21,15 @@ public enum ReservationRestrictionType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ReservationRestrictionType fromValue(String value) {
+        return findByField(
+                ReservationRestrictionType.class,
+                ReservationRestrictionType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -29,14 +38,5 @@ public enum ReservationRestrictionType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ReservationRestrictionType fromValue(String value) {
-        return findByField(
-                ReservationRestrictionType.class,
-                ReservationRestrictionType::value,
-                value
-        );
     }
 }

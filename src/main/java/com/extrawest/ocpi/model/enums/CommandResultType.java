@@ -50,6 +50,15 @@ public enum CommandResultType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static CommandResultType fromValue(String value) {
+        return EnumUtil.findByField(
+                CommandResultType.class,
+                CommandResultType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -58,14 +67,5 @@ public enum CommandResultType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static CommandResultType fromValue(String value) {
-        return EnumUtil.findByField(
-                CommandResultType.class,
-                CommandResultType::value,
-                value
-        );
     }
 }

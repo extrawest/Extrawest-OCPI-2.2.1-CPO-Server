@@ -67,6 +67,15 @@ public enum Capability implements OcpiResponseData {
         this.value = value;
     }
 
+    @JsonCreator
+    public static Capability fromValue(String value) {
+        return EnumUtil.findByField(
+                Capability.class,
+                Capability::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -75,14 +84,5 @@ public enum Capability implements OcpiResponseData {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static Capability fromValue(String value) {
-        return EnumUtil.findByField(
-                Capability.class,
-                Capability::value,
-                value
-        );
     }
 }

@@ -31,6 +31,15 @@ public enum AuthMethod {
         this.value = value;
     }
 
+    @JsonCreator
+    public static AuthMethod fromValue(String value) {
+        return findByField(
+                AuthMethod.class,
+                AuthMethod::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -39,14 +48,5 @@ public enum AuthMethod {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static AuthMethod fromValue(String value) {
-        return findByField(
-                AuthMethod.class,
-                AuthMethod::value,
-                value
-        );
     }
 }

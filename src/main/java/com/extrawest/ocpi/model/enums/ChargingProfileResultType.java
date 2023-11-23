@@ -26,6 +26,15 @@ public enum ChargingProfileResultType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ChargingProfileResultType fromValue(String value) {
+        return EnumUtil.findByField(
+                ChargingProfileResultType.class,
+                ChargingProfileResultType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -34,14 +43,5 @@ public enum ChargingProfileResultType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ChargingProfileResultType fromValue(String value) {
-        return EnumUtil.findByField(
-                ChargingProfileResultType.class,
-                ChargingProfileResultType::value,
-                value
-        );
     }
 }

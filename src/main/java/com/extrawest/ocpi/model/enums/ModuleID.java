@@ -27,6 +27,15 @@ public enum ModuleID {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ModuleID fromValue(String value) {
+        return EnumUtil.findByField(
+                ModuleID.class,
+                ModuleID::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -35,14 +44,5 @@ public enum ModuleID {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ModuleID fromValue(String value) {
-        return EnumUtil.findByField(
-                ModuleID.class,
-                ModuleID::value,
-                value
-        );
     }
 }

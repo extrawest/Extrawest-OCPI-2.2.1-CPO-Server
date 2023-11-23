@@ -20,6 +20,15 @@ public enum Status {
         this.value = value;
     }
 
+    @JsonCreator
+    public static Status fromValue(String value) {
+        return EnumUtil.findByField(
+                Status.class,
+                Status::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -28,14 +37,5 @@ public enum Status {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static Status fromValue(String value) {
-        return EnumUtil.findByField(
-                Status.class,
-                Status::value,
-                value
-        );
     }
 }

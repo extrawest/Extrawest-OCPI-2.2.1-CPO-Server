@@ -30,6 +30,15 @@ public enum ProfileType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ProfileType fromValue(String value) {
+        return EnumUtil.findByField(
+                ProfileType.class,
+                ProfileType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -38,14 +47,5 @@ public enum ProfileType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ProfileType fromValue(String value) {
-        return EnumUtil.findByField(
-                ProfileType.class,
-                ProfileType::value,
-                value
-        );
     }
 }

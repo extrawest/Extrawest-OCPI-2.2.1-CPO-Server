@@ -46,6 +46,15 @@ public enum ImageCategory {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ImageCategory fromValue(String value) {
+        return EnumUtil.findByField(
+                ImageCategory.class,
+                ImageCategory::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -54,14 +63,5 @@ public enum ImageCategory {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ImageCategory fromValue(String value) {
-        return EnumUtil.findByField(
-                ImageCategory.class,
-                ImageCategory::value,
-                value
-        );
     }
 }

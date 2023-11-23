@@ -29,6 +29,15 @@ public enum TokenType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static TokenType fromValue(String value) {
+        return EnumUtil.findByField(
+                TokenType.class,
+                TokenType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -37,14 +46,5 @@ public enum TokenType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static TokenType fromValue(String value) {
-        return EnumUtil.findByField(
-                TokenType.class,
-                TokenType::value,
-                value
-        );
     }
 }

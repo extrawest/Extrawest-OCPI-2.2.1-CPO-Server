@@ -34,6 +34,15 @@ public enum WhitelistType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static WhitelistType fromValue(String value) {
+        return EnumUtil.findByField(
+                WhitelistType.class,
+                WhitelistType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -42,14 +51,5 @@ public enum WhitelistType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static WhitelistType fromValue(String value) {
-        return EnumUtil.findByField(
-                WhitelistType.class,
-                WhitelistType::value,
-                value
-        );
     }
 }

@@ -65,7 +65,7 @@ public class CpoLocationController {
     /**
      * Retrieve a Location as it is stored in the eMSP system.
      *
-     * @param locationId  Location.id of the Location object to retrieve.
+     * @param locationId Location.id of the Location object to retrieve.
      * @return The Location object
      */
     @GetMapping("/{location_id}")
@@ -81,8 +81,8 @@ public class CpoLocationController {
     /**
      * Retrieve a Location as it is stored in the eMSP system.
      *
-     * @param locationId  Location.id of the Location object to retrieve.
-     * @param evseUid     EVSE.id of the EVSE object to retrieve.
+     * @param locationId Location.id of the Location object to retrieve.
+     * @param evseUid    EVSE.id of the EVSE object to retrieve.
      * @return The EVSE object
      */
     @GetMapping("/{location_id}/{evse_uid}")

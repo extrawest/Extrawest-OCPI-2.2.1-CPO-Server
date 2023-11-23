@@ -52,13 +52,14 @@ public class CpoTokensController {
 
     /**
      * Push new/updated Token object to the CPO.
-     * @param tokenDTO New or updated Token object.
+     *
+     * @param tokenDTO    New or updated Token object.
      * @param countryCode Country code of the eMSP sending this PUT request to the CPO system. This SHALL be the same value
-     * as the country_code in the Token object being pushed.
-     * @param partyId Party ID (Provider ID) of the eMSP sending this PUT request to the CPO system.
-     * This SHALL be the same value as the party_id in the Token object being pushed.
-     * @param tokenUid Token.uid of the (new) Token object (to replace).
-     * @param type Token.type of the Token of the (new) Token object (to replace). Default if omitted: RFID
+     *                    as the country_code in the Token object being pushed.
+     * @param partyId     Party ID (Provider ID) of the eMSP sending this PUT request to the CPO system.
+     *                    This SHALL be the same value as the party_id in the Token object being pushed.
+     * @param tokenUid    Token.uid of the (new) Token object (to replace).
+     * @param type        Token.type of the Token of the (new) Token object (to replace). Default if omitted: RFID
      */
     @PutMapping("/{country_code}/{party_id}/{token_uid}/{type}")
     public ResponseEntity<ResponseFormat<TokenDto>> putToken(
@@ -78,13 +79,14 @@ public class CpoTokensController {
 
     /**
      * Notify the CPO of partial updates to a Token.
-     * @param tokenDTO New or updated Token object.
+     *
+     * @param tokenDTO    New or updated Token object.
      * @param countryCode Country code of the eMSP sending this PUT request to the CPO system. This SHALL be the same value
-     * as the country_code in the Token object being pushed.
-     * @param partyId Party ID (Provider ID) of the eMSP sending this PUT request to the CPO system.
-     * This SHALL be the same value as the party_id in the Token object being pushed.
-     * @param tokenUid Token.uid of the (new) Token object (to replace).
-     * @param type Token.type of the Token of the (new) Token object (to replace). Default if omitted: RFID
+     *                    as the country_code in the Token object being pushed.
+     * @param partyId     Party ID (Provider ID) of the eMSP sending this PUT request to the CPO system.
+     *                    This SHALL be the same value as the party_id in the Token object being pushed.
+     * @param tokenUid    Token.uid of the (new) Token object (to replace).
+     * @param type        Token.type of the Token of the (new) Token object (to replace). Default if omitted: RFID
      */
     @PatchMapping("/{country_code}/{party_id}/{token_uid}/{type}")
     public ResponseEntity<ResponseFormat<TokenDto>> patchToken(

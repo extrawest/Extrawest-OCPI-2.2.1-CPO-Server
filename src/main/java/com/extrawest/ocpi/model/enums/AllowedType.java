@@ -31,6 +31,15 @@ public enum AllowedType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static AllowedType fromValue(String value) {
+        return EnumUtil.findByField(
+                AllowedType.class,
+                AllowedType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -39,14 +48,5 @@ public enum AllowedType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static AllowedType fromValue(String value) {
-        return EnumUtil.findByField(
-                AllowedType.class,
-                AllowedType::value,
-                value
-        );
     }
 }

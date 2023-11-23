@@ -9,10 +9,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class PaginationServiceImpl implements PaginationService {
+    public static final String OCPI_PAGINATION_LINK_HEADER = "<%s>; rel=\"next\"";
     @Value("${maxXLimit}")
     private String maxXLimit;
-
-    public static final String OCPI_PAGINATION_LINK_HEADER = "<%s>; rel=\"next\"";
 
     @Override
     public int adjustLimitByMax(Integer limit) {

@@ -20,6 +20,15 @@ public enum EnvironmentalImpactCategory {
         this.value = value;
     }
 
+    @JsonCreator
+    public static EnvironmentalImpactCategory fromValue(String value) {
+        return findByField(
+                EnvironmentalImpactCategory.class,
+                EnvironmentalImpactCategory::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -28,14 +37,5 @@ public enum EnvironmentalImpactCategory {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static EnvironmentalImpactCategory fromValue(String value) {
-        return findByField(
-                EnvironmentalImpactCategory.class,
-                EnvironmentalImpactCategory::value,
-                value
-        );
     }
 }

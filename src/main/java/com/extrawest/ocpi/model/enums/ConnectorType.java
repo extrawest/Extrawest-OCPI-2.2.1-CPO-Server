@@ -171,6 +171,15 @@ public enum ConnectorType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static ConnectorType fromValue(String value) {
+        return EnumUtil.findByField(
+                ConnectorType.class,
+                ConnectorType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -179,14 +188,5 @@ public enum ConnectorType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static ConnectorType fromValue(String value) {
-        return EnumUtil.findByField(
-                ConnectorType.class,
-                ConnectorType::value,
-                value
-        );
     }
 }

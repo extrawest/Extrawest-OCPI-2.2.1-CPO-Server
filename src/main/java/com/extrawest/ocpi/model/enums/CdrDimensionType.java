@@ -80,6 +80,15 @@ public enum CdrDimensionType {
         this.value = value;
     }
 
+    @JsonCreator
+    public static CdrDimensionType fromValue(String value) {
+        return findByField(
+                CdrDimensionType.class,
+                CdrDimensionType::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -88,14 +97,5 @@ public enum CdrDimensionType {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static CdrDimensionType fromValue(String value) {
-        return findByField(
-                CdrDimensionType.class,
-                CdrDimensionType::value,
-                value
-        );
     }
 }

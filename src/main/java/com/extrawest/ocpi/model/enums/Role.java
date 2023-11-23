@@ -40,6 +40,15 @@ public enum Role {
         this.value = value;
     }
 
+    @JsonCreator
+    public static Role fromValue(String value) {
+        return findByField(
+                Role.class,
+                Role::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -48,14 +57,5 @@ public enum Role {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static Role fromValue(String value) {
-        return findByField(
-                Role.class,
-                Role::value,
-                value
-        );
     }
 }

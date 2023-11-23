@@ -3,8 +3,6 @@ package com.extrawest.ocpi.validation;
 import com.extrawest.ocpi.exception.OcpiGeneralClientException;
 import com.extrawest.ocpi.exception.OcpiInvalidParametersException;
 import com.extrawest.ocpi.model.dto.ClientOwnedObject;
-import com.extrawest.ocpi.model.dto.location.Connector;
-import com.extrawest.ocpi.model.dto.location.EVSE;
 import com.extrawest.ocpi.model.dto.token.TokenDto;
 import lombok.experimental.UtilityClass;
 

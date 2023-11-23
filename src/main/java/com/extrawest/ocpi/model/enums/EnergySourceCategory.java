@@ -44,6 +44,15 @@ public enum EnergySourceCategory {
         this.value = value;
     }
 
+    @JsonCreator
+    public static EnergySourceCategory fromValue(String value) {
+        return findByField(
+                EnergySourceCategory.class,
+                EnergySourceCategory::value,
+                value
+        );
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -52,14 +61,5 @@ public enum EnergySourceCategory {
     @JsonValue
     public String value() {
         return this.value;
-    }
-
-    @JsonCreator
-    public static EnergySourceCategory fromValue(String value) {
-        return findByField(
-                EnergySourceCategory.class,
-                EnergySourceCategory::value,
-                value
-        );
     }
 }
