@@ -5,17 +5,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Result of the command that was send to the Charge Point.
+ * Result of the command that was sent to the Charge Point.
  */
 public enum CommandResultType {
     /**
      * Command request accepted by the Charge Point.
      */
-    ACCEPTED ("ACCEPTED "),
+    ACCEPTED("ACCEPTED"),
     /**
      * The Reservation has been canceled by the CPO.
      */
-    CANCELED_RESERVATION ("CANCELED_RESERVATION "),
+    CANCELED_RESERVATION("CANCELED_RESERVATION"),
     /**
      * EVSE is currently occupied, another session is ongoing. Cannot start a new session
      */
