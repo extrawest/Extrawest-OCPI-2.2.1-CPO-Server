@@ -1,15 +1,17 @@
 package com.extrawest.ocpi.controller;
 
+import com.extrawest.ocpi.model.dto.ResponseFormat;
 import com.extrawest.ocpi.model.dto.VersionDetailsDto;
 import com.extrawest.ocpi.model.dto.VersionDto;
 import com.extrawest.ocpi.model.enums.VersionNumber;
+import com.extrawest.ocpi.model.enums.status_codes.OcpiStatusCode;
 import com.extrawest.ocpi.service.CpoVersionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,8 +33,12 @@ public class CpoVersionController {
      * @return list of VersionResponseDTO
      */
     @GetMapping
-    public ResponseEntity<List<VersionDto>> getVersion() {
-        return ResponseEntity.ok(cpoVersionService.getVersion());
+    public ResponseEntity<ResponseFormat<List<VersionDto>>> getVersions() {
+        List<VersionDto> versions = cpoVersionService.getVersions();
+
+        ResponseFormat<List<VersionDto>> responseFormat = new ResponseFormat<List<VersionDto>>()
+                .build(OcpiStatusCode.SUCCESS, versions);
+        return ResponseEntity.ok(responseFormat);
     }
 
     /**
@@ -42,10 +48,13 @@ public class CpoVersionController {
      * @param version - version of OCPI
      * @return VersionDetails
      */
-    @GetMapping("/details/{version}")
-    public ResponseEntity<VersionDetailsDto> getVersionDetails(
-            @PathVariable(value = "version") VersionNumber version
-    ) {
-        return ResponseEntity.ok(cpoVersionService.getVersionDetails(version));
-    };
+    @GetMapping("/details")
+    public ResponseEntity<ResponseFormat<VersionDetailsDto>> getVersionDetails(
+            @RequestParam(value = "version") String version) {
+        VersionDetailsDto versionDetails = cpoVersionService.getVersionDetails(VersionNumber.fromValue(version));
+
+        ResponseFormat<VersionDetailsDto> responseFormat = new ResponseFormat<VersionDetailsDto>()
+                .build(OcpiStatusCode.SUCCESS, versionDetails);
+        return ResponseEntity.ok(responseFormat);
+    }
 }

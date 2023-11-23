@@ -1,7 +1,9 @@
 package com.extrawest.ocpi.controller;
 
-import com.extrawest.ocpi.model.dto.charging_profile.ChargingProfile;
+import com.extrawest.ocpi.model.dto.ResponseFormat;
+import com.extrawest.ocpi.model.dto.charging_profile.ChargingProfileResponse;
 import com.extrawest.ocpi.model.dto.charging_profile.SetChargingProfile;
+import com.extrawest.ocpi.model.enums.status_codes.OcpiStatusCode;
 import com.extrawest.ocpi.service.CpoChargingProfilesService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +35,17 @@ public class CpoChargingProfilesController {
      * This is not the response by the Charge Point.
      */
     @GetMapping("/{session_id}/{duration}/{response_url}")
-    public ResponseEntity<ChargingProfile> getChargingProfile(
+    public ResponseEntity<ResponseFormat<ChargingProfileResponse>> getChargingProfile(
             @PathVariable(value = "session_id") String sessionId,
             @PathVariable(value = "duration") Integer duration,
             @PathVariable(value = "response_url") String responseUrl
     ) {
-        return ResponseEntity.ok(cpoChargingProfilesService.getChargingProfile(sessionId, duration, responseUrl));
+        ChargingProfileResponse chargingProfileResponse =
+                cpoChargingProfilesService.getChargingProfile(sessionId, duration, responseUrl);
+
+        ResponseFormat<ChargingProfileResponse> responseFormat = new ResponseFormat<ChargingProfileResponse>()
+                .build(OcpiStatusCode.SUCCESS, chargingProfileResponse);
+        return ResponseEntity.ok(responseFormat);
     }
 
     /**
@@ -52,10 +59,9 @@ public class CpoChargingProfilesController {
      * This is not the response by the Charge Point.
      */
     @PutMapping("/{session_id}")
-    public ResponseEntity<ChargingProfile> putChargingProfile(
+    public ResponseEntity<ResponseFormat> putChargingProfile(
             @PathVariable(value = "session_id") String sessionId,
-            @RequestBody @Valid SetChargingProfile setChargingProfileRequestDTO
-    ) {
+            @RequestBody @Valid SetChargingProfile setChargingProfileRequestDTO) {
         return ResponseEntity.ok(cpoChargingProfilesService.putChargingProfile(sessionId, setChargingProfileRequestDTO));
     }
 
@@ -63,18 +69,22 @@ public class CpoChargingProfilesController {
      * Cancels an existing ChargingProfile for a specific charging session.
      *
      * @param sessionId   The unique id that identifies the session in the CPO platform.
-     * @param responseUrl URL that the ClearProfileResult POST should be send to. This URL might contain an
+     * @param responseUrl URL that the ClearProfileResult POST should be sent to. This URL might contain
      *                    unique ID to be able to distinguish between DELETE ChargingProfile requests.
      * @return Result of the ChargingProfile DELETE request, by the CPO (not the location/EVSE). So this indicates
      * if the CPO understood the ChargingProfile DELETE request and was able to send it to the EVSE. This is
      * not the response by the Charge Point.
      */
     @DeleteMapping("/{session_id}/{response_url}")
-    public ResponseEntity<ChargingProfile> deleteChargingProfile(
+    public ResponseEntity<ResponseFormat<ChargingProfileResponse>> deleteChargingProfile(
             @PathVariable(value = "session_id") String sessionId,
-            @PathVariable(value = "response_url") String responseUrl
-    ) {
-        return ResponseEntity.ok(cpoChargingProfilesService.deleteChargingProfile(sessionId, responseUrl));
-    };
+            @PathVariable(value = "response_url") String responseUrl) {
+        ChargingProfileResponse chargingProfileResponse =
+                cpoChargingProfilesService.deleteChargingProfile(sessionId, responseUrl);
+
+        ResponseFormat<ChargingProfileResponse> responseFormat = new ResponseFormat<ChargingProfileResponse>()
+                .build(OcpiStatusCode.SUCCESS, chargingProfileResponse);
+        return ResponseEntity.ok(responseFormat);
+    }
 
 }

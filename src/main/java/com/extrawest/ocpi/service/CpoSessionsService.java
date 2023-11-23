@@ -10,6 +10,7 @@ public interface CpoSessionsService {
 
     List<SessionDto> getSessions(LocalDateTime dateFrom, LocalDateTime dateTo, Integer offset, Integer limit);
 
-    ChargingPreferences putChargingPreferences(String sessionId, ChargingPreferences chargingPreferencesDTO);
+    long getTotalCount(LocalDateTime dateFrom, LocalDateTime dateTo);
 
+    ChargingPreferences putChargingPreferences(String sessionId, ChargingPreferences chargingPreferencesDTO);
 }

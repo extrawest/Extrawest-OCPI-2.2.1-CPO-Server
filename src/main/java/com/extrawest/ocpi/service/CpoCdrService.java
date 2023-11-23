@@ -9,4 +9,5 @@ import java.util.List;
 public interface CpoCdrService {
     List<CDRDto> getCdr(LocalDateTime dateFrom, LocalDateTime dateTo, Integer offset, Integer limit);
 
+    long getTotalCount(LocalDateTime dateFrom, LocalDateTime dateTo);
 }

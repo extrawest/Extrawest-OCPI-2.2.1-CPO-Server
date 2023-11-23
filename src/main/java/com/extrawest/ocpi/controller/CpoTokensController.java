@@ -60,15 +60,18 @@ public class CpoTokensController {
      * @param type Token.type of the Token of the (new) Token object (to replace). Default if omitted: RFID
      */
     @PutMapping("/{country_code}/{party_id}/{token_uid}/{type}")
-    public void putToken(
+    public ResponseEntity<ResponseFormat<TokenDto>> putToken(
             @RequestBody @Valid TokenDto tokenDTO,
             @PathVariable(value = "country_code") @Size(min = 2, max = 2) String countryCode,
             @PathVariable(value = "party_id") @Size(min = 3, max = 3) String partyId,
             @PathVariable(value = "token_uid") @Size(min = 1, max = 36) String tokenUid,
-            @PathVariable(value = "type", required = false) TokenType type
-    ) {
-        cpoTokensService.putToken(tokenDTO, countryCode, partyId, tokenUid, type);
-    };
+            @PathVariable(value = "type", required = false) TokenType type) {
+        TokenDto dto = cpoTokensService.putToken(tokenDTO, countryCode, partyId, tokenUid, type);
+
+        ResponseFormat<TokenDto> responseFormat = new ResponseFormat<TokenDto>()
+                .build(OcpiStatusCode.SUCCESS, dto);
+        return ResponseEntity.ok(responseFormat);
+    }
 
     /**
      * Notify the CPO of partial updates to a Token.
@@ -81,14 +84,17 @@ public class CpoTokensController {
      * @param type Token.type of the Token of the (new) Token object (to replace). Default if omitted: RFID
      */
     @PatchMapping("/{country_code}/{party_id}/{token_uid}/{type}")
-    public void patchToken(
+    public ResponseEntity<ResponseFormat<TokenDto>> patchToken(
             @RequestBody @Valid TokenDto tokenDTO,
             @PathVariable(value = "country_code") @Size(min = 2, max = 2) String countryCode,
             @PathVariable(value = "party_id") @Size(min = 3, max = 3) String partyId,
             @PathVariable(value = "token_uid") @Size(min = 1, max = 36) String tokenUid,
-            @PathVariable(value = "type", required = false) TokenType type
-    ) {
-        cpoTokensService.patchToken(tokenDTO, countryCode, partyId, tokenUid, type);
+            @PathVariable(value = "type", required = false) TokenType type) {
+        TokenDto dto = cpoTokensService.patchToken(tokenDTO, countryCode, partyId, tokenUid, type);
+
+        ResponseFormat<TokenDto> responseFormat = new ResponseFormat<TokenDto>()
+                .build(OcpiStatusCode.SUCCESS, dto);
+        return ResponseEntity.ok(responseFormat);
     }
 
 }

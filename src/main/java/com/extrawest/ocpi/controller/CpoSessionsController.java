@@ -1,10 +1,15 @@
 package com.extrawest.ocpi.controller;
 
 import com.extrawest.ocpi.model.dto.ChargingPreferences;
+import com.extrawest.ocpi.model.dto.ResponseFormat;
 import com.extrawest.ocpi.model.dto.SessionDto;
+import com.extrawest.ocpi.model.enums.status_codes.OcpiStatusCode;
 import com.extrawest.ocpi.service.CpoSessionsService;
+import com.extrawest.ocpi.service.pagination.PaginationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +23,12 @@ import java.util.List;
 public class CpoSessionsController {
 
     protected final CpoSessionsService cpoSessionsService;
+    protected final PaginationService paginationService;
 
-    protected CpoSessionsController(@Autowired CpoSessionsService cpoSessionsService) {
+    protected CpoSessionsController(@Autowired CpoSessionsService cpoSessionsService,
+                                    @Autowired PaginationService paginationService) {
         this.cpoSessionsService = cpoSessionsService;
+        this.paginationService = paginationService;
     }
 
     /**
@@ -33,13 +41,24 @@ public class CpoSessionsController {
      * @return List of Session objects that match the request parameters.
      */
     @GetMapping
-    public ResponseEntity<List<SessionDto>> getSessions(
+    public ResponseEntity<ResponseFormat<List<SessionDto>>> getSessions(
             @RequestParam(value = "date_from") LocalDateTime dateFrom,
             @RequestParam(value = "date_to", required = false) LocalDateTime dateTo,
             @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-            @RequestParam(value = "limit", required = false) Integer limit
-    ) {
-        return ResponseEntity.ok(cpoSessionsService.getSessions(dateFrom, dateTo, offset, limit));
+            @RequestParam(value = "limit", required = false) Integer limit,
+            HttpServletRequest request) {
+        int adjustedLimit = paginationService.adjustLimitByMax(limit);
+
+        List<SessionDto> sessions = cpoSessionsService.getSessions(dateFrom, dateTo, offset, adjustedLimit);
+        long totalCount = cpoSessionsService.getTotalCount(dateFrom, dateTo);
+
+        ResponseFormat<List<SessionDto>> responseFormat = new ResponseFormat<List<SessionDto>>()
+                .build(OcpiStatusCode.SUCCESS, sessions);
+        HttpHeaders responseHeaders = paginationService.buildHeader(offset, adjustedLimit, request, totalCount);
+
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(responseFormat);
     }
 
     /**
@@ -50,11 +69,16 @@ public class CpoSessionsController {
      * @return Response to the Charging Preferences PUT request.
      */
     @PutMapping
-    public ResponseEntity<ChargingPreferences> putChargingPreferences(
+    public ResponseEntity<ResponseFormat<ChargingPreferences>> putChargingPreferences(
             @RequestParam(value = "session_id") String sessionId,
-            @RequestBody @Valid ChargingPreferences chargingPreferencesDTO
-    ) {
-        return ResponseEntity.ok(cpoSessionsService.putChargingPreferences(sessionId, chargingPreferencesDTO));
-    };
+            @RequestBody @Valid ChargingPreferences chargingPreferencesDTO) {
+
+        ChargingPreferences chargingPreferences =
+                cpoSessionsService.putChargingPreferences(sessionId, chargingPreferencesDTO);
+
+        ResponseFormat<ChargingPreferences> responseFormat = new ResponseFormat<ChargingPreferences>()
+                .build(OcpiStatusCode.SUCCESS, chargingPreferences);
+        return ResponseEntity.ok(responseFormat);
+    }
 
 }

@@ -9,4 +9,6 @@ public interface HubClientInfoService {
 
     List<ClientInfoDto> getClientInfoList(LocalDateTime dateFrom, LocalDateTime dateTo, Integer offset, Integer limit);
 
+    long getTotalCount(LocalDateTime dateFrom, LocalDateTime dateTo);
+
 }

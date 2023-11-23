@@ -1,13 +1,18 @@
 package com.extrawest.ocpi.controller;
 
 import com.extrawest.ocpi.model.dto.ClientInfoDto;
+import com.extrawest.ocpi.model.dto.ResponseFormat;
+import com.extrawest.ocpi.model.enums.status_codes.OcpiStatusCode;
 import com.extrawest.ocpi.service.HubClientInfoService;
+import com.extrawest.ocpi.service.pagination.PaginationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -19,9 +24,12 @@ import java.util.List;
 public class HubClientInfoController {
 
     protected final HubClientInfoService hubClientInfoService;
+    protected final PaginationService paginationService;
 
-    protected HubClientInfoController(@Autowired HubClientInfoService hubClientInfoService) {
+    protected HubClientInfoController(@Autowired HubClientInfoService hubClientInfoService,
+                                      @Autowired PaginationService paginationService) {
         this.hubClientInfoService = hubClientInfoService;
+        this.paginationService = paginationService;
     }
 
     /**
@@ -34,13 +42,23 @@ public class HubClientInfoController {
      * @return List of all (or matching) ClientInfo objects.
      */
     @GetMapping("/{date_from}/{date_to}/{offset}/{limit}")
-    public ResponseEntity<List<ClientInfoDto>> getClientInfoList(
-            @PathVariable(value = "date_from", required = false) LocalDateTime dateFrom,
-            @PathVariable(value = "date_to", required = false) LocalDateTime dateTo,
-            @PathVariable(value = "offset", required = false) Integer offset,
-            @PathVariable(value = "limit", required = false) Integer limit
-    ) {
-        return ResponseEntity.ok(hubClientInfoService.getClientInfoList(dateFrom, dateTo, offset, limit));
-    };
+    public ResponseEntity<ResponseFormat<List<ClientInfoDto>>> getClientInfoList(
+            @RequestParam(value = "date_from", required = false) LocalDateTime dateFrom,
+            @RequestParam(value = "date_to", required = false) LocalDateTime dateTo,
+            @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+            @RequestParam(value = "limit", required = false) Integer limit,
+            HttpServletRequest request) {
+        int adjustedLimit = paginationService.adjustLimitByMax(limit);
 
+        List<ClientInfoDto> clientsInfo = hubClientInfoService.getClientInfoList(dateFrom, dateTo, offset, adjustedLimit);
+        long totalCount = hubClientInfoService.getTotalCount(dateFrom, dateTo);
+
+        ResponseFormat<List<ClientInfoDto>> responseFormat = new ResponseFormat<List<ClientInfoDto>>()
+                .build(OcpiStatusCode.SUCCESS, clientsInfo);
+        HttpHeaders responseHeaders = paginationService.buildHeader(offset, adjustedLimit, request, totalCount);
+
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(responseFormat);
+    }
 }

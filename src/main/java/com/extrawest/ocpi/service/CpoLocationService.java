@@ -1,7 +1,7 @@
 package com.extrawest.ocpi.service;
 
-
-import com.extrawest.ocpi.model.dto.AbstractDomainObject;
+import com.extrawest.ocpi.model.dto.location.Connector;
+import com.extrawest.ocpi.model.dto.location.EVSE;
 import com.extrawest.ocpi.model.dto.location.Location;
 
 import java.time.LocalDateTime;
@@ -11,6 +11,13 @@ public interface CpoLocationService {
 
     List<Location> getLocations(LocalDateTime dateFrom, LocalDateTime dateTo, Integer offset, Integer limit);
 
-    AbstractDomainObject getLocationEvseController(String locationId, String evseUid, String connectorId);
+    long getTotalCount(LocalDateTime dateFrom, LocalDateTime dateTo);
+
+    Location getLocation(String countryCode, String partyId, String locationId);
+
+    EVSE getEvse(String countryCode, String partyId, String locationId, String evseUid);
+
+    Connector getConnector(String countryCode, String partyId, String locationId, String evseUid,
+                           String connectorId);
 
 }

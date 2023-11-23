@@ -1,14 +1,14 @@
 package com.extrawest.ocpi.service;
 
-import com.extrawest.ocpi.model.dto.charging_profile.ChargingProfile;
+import com.extrawest.ocpi.model.dto.ResponseFormat;
+import com.extrawest.ocpi.model.dto.charging_profile.ChargingProfileResponse;
 import com.extrawest.ocpi.model.dto.charging_profile.SetChargingProfile;
 
 public interface CpoChargingProfilesService {
 
-    ChargingProfile getChargingProfile(String sessionId, Integer duration, String responseUrl);
+    ChargingProfileResponse getChargingProfile(String sessionId, Integer duration, String responseUrl);
 
-    ChargingProfile putChargingProfile(String sessionId, SetChargingProfile setChargingProfileRequestDTO);
+    ResponseFormat putChargingProfile(String sessionId, SetChargingProfile setChargingProfileRequestDTO);
 
-    ChargingProfile deleteChargingProfile(String sessionId, String responseUrl);
-
+    ChargingProfileResponse deleteChargingProfile(String sessionId, String responseUrl);
 }

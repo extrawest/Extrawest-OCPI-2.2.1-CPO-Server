@@ -1,15 +1,13 @@
 package com.extrawest.ocpi.controller;
 
-import com.extrawest.ocpi.model.dto.PaginationHeaders;
 import com.extrawest.ocpi.model.dto.ResponseFormat;
 import com.extrawest.ocpi.model.dto.tariff.TariffDto;
 import com.extrawest.ocpi.model.enums.status_codes.OcpiStatusCode;
 import com.extrawest.ocpi.service.CpoTariffService;
-import com.extrawest.ocpi.util.PaginationUtils;
+import com.extrawest.ocpi.service.pagination.PaginationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,21 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.extrawest.ocpi.util.PaginationUtils.OCPI_PAGINATION_LINK_HEADER;
-
 @RestController
 @RequestMapping("/cpo/api/2.2.1/tariffs")
 @Tag(name = "CpoTariff")
 @Validated
 public class CpoTariffController {
-
     protected final CpoTariffService cpoTariffService;
+    protected final PaginationService paginationService;
 
-    @Value("${maxXLimit}")
-    private String maxXLimit;
-
-    public CpoTariffController(@Autowired CpoTariffService cpoTariffService) {
+    public CpoTariffController(@Autowired CpoTariffService cpoTariffService,
+                               @Autowired PaginationService paginationService) {
         this.cpoTariffService = cpoTariffService;
+        this.paginationService = paginationService;
     }
 
     /**
@@ -54,30 +49,17 @@ public class CpoTariffController {
             @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
             @RequestParam(value = "limit", required = false) Integer limit,
             HttpServletRequest request) {
+        int adjustedLimit = paginationService.adjustLimitByMax(limit);
 
-        limit = limit == null || limit > Integer.parseInt(maxXLimit) ? Integer.parseInt(maxXLimit) : limit;
-
-        List<TariffDto> tariffs = cpoTariffService.getAll(dateFrom, dateTo, offset, limit);
-
+        List<TariffDto> tariffs = cpoTariffService.getAll(dateFrom, dateTo, offset, adjustedLimit);
         long totalCount = cpoTariffService.getTotalCount(dateFrom, dateTo);
 
         ResponseFormat<List<TariffDto>> responseFormat = new ResponseFormat<List<TariffDto>>()
                 .build(OcpiStatusCode.SUCCESS, tariffs);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        if (PaginationUtils.hasNext(offset, limit, totalCount)) {
-            String uriForNextPage = PaginationUtils.constructNextPageUri(request, offset, limit);
-            responseHeaders.set(PaginationHeaders.LINK,
-                    String.format(OCPI_PAGINATION_LINK_HEADER, uriForNextPage)
-            );
-        }
-
-        responseHeaders.add(PaginationHeaders.X_LIMIT, maxXLimit);
-        responseHeaders.add(PaginationHeaders.X_TOTAL_COUNT, String.valueOf(totalCount));
+        HttpHeaders responseHeaders = paginationService.buildHeader(offset, adjustedLimit, request, totalCount);
 
         return ResponseEntity.ok()
                 .headers(responseHeaders)
                 .body(responseFormat);
     }
-
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CpoVersionService {
 
-    List<VersionDto> getVersion();
+    List<VersionDto> getVersions();
 
     VersionDetailsDto getVersionDetails(VersionNumber version);
 

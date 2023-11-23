@@ -1,9 +1,14 @@
 package com.extrawest.ocpi.controller;
 
+import com.extrawest.ocpi.model.dto.ResponseFormat;
 import com.extrawest.ocpi.model.dto.cdr.CDRDto;
+import com.extrawest.ocpi.model.enums.status_codes.OcpiStatusCode;
 import com.extrawest.ocpi.service.CpoCdrService;
+import com.extrawest.ocpi.service.pagination.PaginationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +24,12 @@ import java.util.List;
 public class CpoCdrController {
 
     protected final CpoCdrService cpoCdrService;
+    protected final PaginationService paginationService;
 
-    protected CpoCdrController(@Autowired CpoCdrService cpoCdrService) {
+    protected CpoCdrController(@Autowired CpoCdrService cpoCdrService,
+                               @Autowired PaginationService paginationService) {
         this.cpoCdrService = cpoCdrService;
+        this.paginationService = paginationService;
     }
 
     /**
@@ -35,12 +43,23 @@ public class CpoCdrController {
      * will contain the pagination related headers.
      */
     @GetMapping
-    public ResponseEntity<List<CDRDto>> getCdr(
+    public ResponseEntity<ResponseFormat<List<CDRDto>>> getCdr(
             @RequestParam(value = "date_from") LocalDateTime dateFrom,
             @RequestParam(value = "date_to") LocalDateTime dateTo,
             @RequestParam(value = "offset") Integer offset,
-            @RequestParam(value = "limit") Integer limit
-    ) {
-        return ResponseEntity.ok(cpoCdrService.getCdr(dateFrom, dateTo, offset, limit));
-    };
+            @RequestParam(value = "limit") Integer limit,
+            HttpServletRequest request) {
+        int adjustedLimit = paginationService.adjustLimitByMax(limit);
+
+        List<CDRDto> cdrs = cpoCdrService.getCdr(dateFrom, dateTo, offset, limit);
+        long totalCount = cpoCdrService.getTotalCount(dateFrom, dateTo);
+
+        ResponseFormat<List<CDRDto>> responseFormat = new ResponseFormat<List<CDRDto>>()
+                .build(OcpiStatusCode.SUCCESS, cdrs);
+        HttpHeaders responseHeaders = paginationService.buildHeader(offset, adjustedLimit, request, totalCount);
+
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(responseFormat);
+    }
 }

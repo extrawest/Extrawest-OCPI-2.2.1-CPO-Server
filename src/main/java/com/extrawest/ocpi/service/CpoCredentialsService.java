@@ -6,7 +6,7 @@ public interface CpoCredentialsService {
 
     CredentialsDto getCredentials();
 
-    void postCredentials(CredentialsDto credentialsDTO);
+    CredentialsDto postCredentials(CredentialsDto credentialsDTO);
 
     void putCredentials(CredentialsDto credentialsDTO);
 
